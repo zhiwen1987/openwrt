@@ -1,7 +1,6 @@
 #!/bin/sh
 
 if [ ! -f "/tmp/adbyby.updated" ];then
-  touch /tmp/adbyby.mem
   wget_ok="0"
   while [ "$wget_ok" = "0" ] 
     do 
@@ -41,6 +40,9 @@ if [ ! -f "/tmp/adbyby.updated" ];then
       sleep 10
     fi
    done
+   
+   rm -f /tmp/adbyby/data/*.bak
     
-   sleep 10 && /etc/init.d/adbyby restart
+   kill -9 $(busybox ps -w | grep "adbyby --no-daemon" | grep -v grep | awk '{print $1}') >/dev/null 2>&1
 fi
+
